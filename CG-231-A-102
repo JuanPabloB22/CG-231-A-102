@@ -14,12 +14,13 @@
         </style>
     </head>
     <body>
-        <div id="text">Titulo<br/>
-            Subtitulo<br/>
-            Descripción<br/>
+        <div id="text">Transformaciones_geometricas<br/>
+            Juan_Pablo_Bohórquez<br/>
+            Computacion_grafica<br/>
         </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r94/three.min.js"></script>
     <script>
+        lado=30;
         function cubo(lado,color) {
             geometria=new THREE.Geometry();
            //Proceso de construccion del cubo           
@@ -32,8 +33,12 @@
            var arista5 = [[0,lado,0],[lado,lado,0]]
            var arista6 = [[0,lado,lado],[lado,lado,lado]]
            var arista7 = [[0,0,lado],[lado,0,lado]]
-            return geometria;
-            
+           var arista8 = [[0,0,0],[l,0,0]]
+
+           vector = new THREE.Vector3(x, y, z);
+           GeometriaCubo.vertices.push(vector);
+
+            return geometria;            
         }
 
     function init() {
@@ -99,15 +104,19 @@
         // Colores
         Material=new THREE.ParticleBasicMaterial({color:0xFF0000});
         Material2=new THREE.ParticleBasicMaterial({color:0x00ff00});
+        Materialcubo=new THREE.ParticleBasicMaterial({color:0xFF000})
 
         Cuadrado = new THREE.Line(Geometria,Material);
-        Cuadrado2 = new THREE.Line(Geometria2,Material2); 
+        Cuadrado2 = new THREE.Line(Geometria2,Material2);
+        cubo=new THREE.Line(Geometria,Materialcubo)
+        
+        
 
         // Matriz de Traslación
         var matrizT = new THREE.Matrix4();
-        matrizT.set(1, 0, 0, 0,
-                0, 1, 0, 0,
-                0, 0, 1, 1,
+        matrizT.set(2*lado, 0, 0, 0,
+                0, 0, 0, 0,
+                0, 0, 0, 1,
                 0, 0, 0, 1);
 
                 Cuadrado2.applyMatrix(matrizT);         
@@ -144,6 +153,7 @@
         scene.add(arrowZ);
         scene.add(Cuadrado);
         scene.add(Cuadrado2);
+        scene.add(cubo);
 
         renderer.render(scene, camera);
     }
